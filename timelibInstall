@@ -1,0 +1,12 @@
+#! /bin/sh -f
+#
+#  Install script for Gemini timelib library
+#
+
+slalib_dir=/gemini/slalib/slalib
+
+applSetup.pl -T mv167 -T ppc604 -I src -I startup -d $slalib_dir $1 > $2 2>&1
+
+gmake >> $2 2>&1
+
+exit 0
