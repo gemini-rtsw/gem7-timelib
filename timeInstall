@@ -3,5 +3,4 @@
 #  Install script for Gemini timelib library
 #
 
-applSetup -targets mv167 -include src -depends ../../../slalib \
-          -subdir_file Makefile.Dirs
+applSetup.pl -T mv167 -T ppc604 -I src -d ../../../slalib
