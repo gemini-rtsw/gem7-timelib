@@ -10,9 +10,9 @@ else
     site=CP;
 fi
 
-slalib_dir=/gemini/epics3.13.4/slalib/slalib
+slalib_dir=/gemini/GEM8.5/slalib/slalib
 
-applSetup.pl -T mv167 -T ppc604 -I src -I startup -d $slalib_dir -S $site $1 > $2 2>&1
+applSetup.pl -T mv167 -T ppc604_long -I src -I startup -d $slalib_dir -S $site $1 > $2 2>&1
 
 gmake >> $2 2>&1
 
