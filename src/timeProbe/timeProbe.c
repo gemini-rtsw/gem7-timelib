@@ -82,21 +82,19 @@ int main( int argc, char *argv[] )
           if( !td[i].timeStat )
           {
             printf("\t       Yes");
-            printf("\t\t%d\t%f\t%f", td[i].reg, td[i].val, td[i].val-td[0].val);
+            printf("\t%d\t%f\t%f   %s\n", td[i].reg, td[i].val, td[i].val-td[0].val, vmeSystems[i]);
           }
           else
-            printf("\t       No\tunknown\t   unknown\tunknown");
+            printf("\t       No\tunknown\t   unknown\tunknown\t\t%s\n", vmeSystems[i]);
         }
         else
-          printf("\t\tNo\t       No\tunknown\t   unknown\tunknown");
+          printf("\t\tNo\t       No\tunknown\t   unknown\tunknown\t\t%s\n", vmeSystems[i]);
       }
       else
-        printf("\t\tNo\t\tNo\t       No\tunknown\t   unknown\tunknown");
+        printf("\t\tNo\t\tNo\t       No\tunknown\t   unknown\tunknown\t\t%s\n", vmeSystems[i]);
     }
     else
-      printf("No\t\tNo\t\tNo\t       No\tunknown\t   unknown\tunknown");
-
-    printf("\t\t%s", vmeSystems[i]);
+      printf("No\t\tNo\t\tNo\t       No\tunknown\t   unknown\tunknown\t\t%s\n", vmeSystems[i]);
   }
   printf("\n");
 
