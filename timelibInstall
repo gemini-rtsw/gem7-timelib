@@ -4,7 +4,7 @@
 #
 
 host=`hostname`
-if [ "`egrep $host /etc/hosts | egrep '^10\.'`" -ne "" ]; then
+if [ "`egrep $host /etc/hosts | egrep '^10\.' | wc -l`" -gt 0 ]; then
     site=MK;
 else
     site=CP;
