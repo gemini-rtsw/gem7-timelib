@@ -31,6 +31,8 @@ int main( int argc, char *argv[] )
   {
     while( fgets( vmeSystems[numSys], NAME_SIZE, fd ) )
     {
+      /* Get rid of the "\n" */
+      vmeSystems[numSys][strlen(vmeSystems[numSys])-1] = '\0';
       numSys++;
       if( numSys == MAX_SYSTEMS )
       {
