@@ -25,6 +25,8 @@
 #define TRAW_EPOCH 40587.0
 
 #if defined (vxWorks)
+#define TS_SEC_IN_DAY (24*60*60)
+#define TS_SEC_IN_YEAR (TS_SEC_IN_DAY*365)
 #define TS_1900_TO_UNIX_EPOCH ((TS_SEC_IN_YEAR*70)+(17*TS_SEC_IN_DAY))
 #endif
 
