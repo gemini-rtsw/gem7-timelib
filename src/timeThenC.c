@@ -86,7 +86,7 @@ int timeThenC ( double rawt, timescale scale, int ndp, int *ymdhmsf )
 
 
 /* Express the clock time as an MJD in the specified timescale. */
-   if ( j = timeThenD ( rawt, scale, &t ) ) return j;
+   if ( (j = timeThenD ( rawt, scale, &t )) ) return j;
 
 /* Separate days and fraction of a day. */
    d = floor ( t );
@@ -103,7 +103,7 @@ int timeThenC ( double rawt, timescale scale, int ndp, int *ymdhmsf )
 
 /* Handle UTC leap second case. */
    if ( ( scale == UTC ) && ( ymdhmsf [ 5 ] == 59 ) ) {
-      if ( j = timeThenD ( rawt, TAI, &t ) ) return j;
+      if ( (j = timeThenD ( rawt, TAI, &t )) ) return j;
       f = 86400.0 * ( t - datlsd - djmls );
       if ( f >= 0.0 && f < 1.0 ) ymdhmsf [ 5 ] = 60;
    }

@@ -82,7 +82,7 @@ int timeNowT ( timescale scale, int ndp, int *hmsf )
 
 
 /* Read the clock. */
-   if ( j = timeNow ( &tai ) ) return j;
+   if ( (j = timeNow ( &tai )) ) return j;
 
 /* Express the clock time in the specified timescale and format. */
    return timeThenT ( tai, scale, ndp, hmsf );

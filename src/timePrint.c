@@ -51,7 +51,7 @@ int timePrint ( char *scale )
       printf( "\"%s\" is not a supported timescale\n", scale );
       return -1;
    }
-   if ( ts != GMST & ts != LAST ) {
+   if ( (ts != GMST) & (ts != LAST) ) {
       status = timeNowC( ts, 4, ymdhmsf);
       if ( status ) {
          printf( "error code %d from timelib\n", status);

@@ -74,7 +74,7 @@ int timeNowD ( timescale scale, double *datemj )
 
 
 /* Read the clock. */
-   if ( j = timeNow ( &tai ) ) return j;
+   if ( (j = timeNow ( &tai )) ) return j;
 
 /* Express the clock TAI in the specified timescale. */
    return timeThenD ( tai, scale, datemj );

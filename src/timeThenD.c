@@ -89,7 +89,7 @@ int timeThenD ( double rawt, timescale scale, double *datemj )
 
 
 /* Initialize as required. */
-   if ( ! initd ) if ( j = timeInit ( ) ) return j;
+   if ( ! initd ) if ( (j = timeInit ( )) ) return j;
 
 /* Express given raw time in specified timescale. */
    switch ( scale ) {
@@ -97,20 +97,20 @@ int timeThenD ( double rawt, timescale scale, double *datemj )
       *datemj = timeRaw2tai ( rawt );
       break;
    case UTC:
-      if ( j = timeThenD ( rawt, TAI, &d ) ) return j;
+      if ( (j = timeThenD ( rawt, TAI, &d )) ) return j;
       d -= datlsd;
       *datemj = d - ( d >= djmls ? SEC : 0.0 );
       break;
    case UT1:
-      if ( j = timeThenD ( rawt, TAI, &d ) ) return j;
+      if ( (j = timeThenD ( rawt, TAI, &d )) ) return j;
       *datemj = d - datlsd + dutd;
       break;
    case TT:
-      if ( j = timeThenD ( rawt, TAI, &d ) ) return j;
+      if ( (j = timeThenD ( rawt, TAI, &d )) ) return j;
       *datemj = d + dttd;
       break;
    case TDB:
-      if ( j = timeThenD ( rawt, TT, &d ) ) return j;
+      if ( (j = timeThenD ( rawt, TT, &d )) ) return j;
       *datemj = d + deltdbd;
       break;
    default:

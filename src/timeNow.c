@@ -88,9 +88,9 @@ int timeNow ( double *rawt )
 
    if (tsim && absent)
    {
-      if ( j = clock_gettime(CLOCK_REALTIME, &tspec ) ) return j;
+      if ( (j = clock_gettime(CLOCK_REALTIME, &tspec )) ) return j;
       *rawt = tspec.tv_sec + (double)tspec.tv_nsec / 1000000000.0;
-      if ( !initd ) if ( j = timeInit() ) return j;
+      if ( !initd ) if ( (j = timeInit()) ) return j;
       *rawt += datlsd * 86400.0;
    }
    else

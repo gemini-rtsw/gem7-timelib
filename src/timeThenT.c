@@ -96,13 +96,13 @@ int timeThenT ( double rawt, timescale scale, int ndp, int *hmsf )
    case UT1:
    case TT:
    case TDB:
-      if ( j = timeThenD ( rawt, scale, &t ) ) return j;
+      if ( (j = timeThenD ( rawt, scale, &t )) ) return j;
       t = t - floor ( t );
       break;
 
    case GMST:
    case LAST:
-      if ( j = timeThenR ( rawt, scale, &t ) ) return j;
+      if ( (j = timeThenR ( rawt, scale, &t )) ) return j;
       t /= D2PI;
       break;
 
@@ -118,7 +118,7 @@ int timeThenT ( double rawt, timescale scale, int ndp, int *hmsf )
 
 /* Handle UTC leap second case. */
    if ( ( scale == UTC ) && ( hmsf [ 2 ] == 59 ) ) {
-      if ( j = timeThenD ( rawt, TAI, &t ) ) return j;
+      if ( (j = timeThenD ( rawt, TAI, &t )) ) return j;
       d = 86400.0 * ( t - datlsd - djmls );
       if ( d >= 0.0 && d < 1.0 ) hmsf [ 2 ] = 60;
    }

@@ -80,7 +80,7 @@ int timeThenR ( double rawt, timescale scale, double *theta )
       t = slaGmsta ( 40587.0 + d, ( t - d ) - datlsd + dutd );
       break;
    case LAST:
-      if ( j = timeThenR ( rawt, GMST, &t ) ) return j;
+      if ( (j = timeThenR ( rawt, GMST, &t )) ) return j;
       t += delstr;
       break;
    default:

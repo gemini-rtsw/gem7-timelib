@@ -64,7 +64,7 @@ int timeNowR ( timescale scale, double *theta )
    double tai;
 
 /* Read the clock. */
-   if ( j = timeNow ( &tai ) ) return j;
+   if ( (j = timeNow ( &tai )) ) return j;
 
 /* Express the clock TAI in the specified timescale. */
    return timeThenR ( tai, scale, theta );

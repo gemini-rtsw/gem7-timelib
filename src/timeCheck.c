@@ -73,9 +73,9 @@ int timeCheck (double *BCmNTP)
       return readstat ;
     else
     {
-      tspec.tv_sec = tspec.tv_sec - TS_1900_TO_UNIX_EPOCH ;
       taiNTP = tspec.tv_sec + (double)tspec.tv_nsec/1000000000.0 
-                            + datlsd * 86400.0 ;
+                            + datlsd * 86400.0 
+                            - TS_1900_TO_UNIX_EPOCH ;
       *BCmNTP = taiBC - taiNTP ;
     }
    }

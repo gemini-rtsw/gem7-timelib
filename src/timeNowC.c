@@ -77,7 +77,7 @@ int timeNowC ( timescale scale, int ndp, int *ymdhmsf )
    double tai;
 
 /* Read the clock. */
-   if ( j = timeNow ( &tai ) ) return j;
+   if ( (j = timeNow ( &tai )) ) return j;
 
 /* Express the clock time in the specified timescale and format. */
    return timeThenC ( tai, scale, ndp, ymdhmsf );
