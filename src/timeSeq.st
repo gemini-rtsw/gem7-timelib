@@ -9,6 +9,9 @@
 /* *INDENT-OFF* */
 /*
  * $Log$
+ * Revision 1.1.1.1  1998/11/07 23:08:14  epics
+ * Version 1-2 of timelib as transferred from DRAL
+ *
  * Revision 1.9  1998/10/20 07:51:09  dlt
  * Recompute eqn of equinoxes when deltdb changes
  *
@@ -113,15 +116,20 @@ double tcsBias ; assign tcsBias to "{top}ak:biass" ;
 monitor tcsBias ;
 double tcsDeltdb ; assign tcsDeltdb to "{top}ak:deltdb" ;
 monitor tcsDeltdb ;
+double tcsXpm ;   assign tcsXpm to "{top}ak:xpm" ;
+monitor tcsXpm ;
+double tcsYpm ;   assign tcsYpm to "{top}ak:ypm" ;
+monitor tcsYpm ;
+double tcsDjmls ;  assign tcsDjmls to "{top}ak:djmls" ;
+monitor tcsDjmls ;
+double tcsDelat ;  assign tcsDelat to "{top}ak:delat" ;
+monitor tcsDelat ;
+double tcsDelut ;  assign tcsDelut to "{top}ak:delut" ;
+monitor tcsDelut ;
 
 double tcsTlong ; assign tcsTlong to "{top}ak:tlongm" ;
 double tcsTlat ;  assign tcsTlat to "{top}ak:tlatm" ;
-double tcsXpmr ;   assign tcsXpmr to "{top}ak:xpm" ;
-double tcsYpmr ;   assign tcsYpmr to "{top}ak:ypm" ;
 double tcsTtmtai ; assign tcsTtmtai to "{top}ak:ttmtai" ;
-double tcsDjmls ;  assign tcsDjmls to "{top}ak:djmls" ;
-double tcsDelat ;  assign tcsDelat to "{top}ak:delat" ;
-double tcsDelut ;  assign tcsDelut to "{top}ak:delut" ;
 
 string timeHealth ;    assign timeHealth to "{sys}TIME:health" ;
 string tcsLog ;    assign tcsLog to "{sys}logrecord" ;
@@ -130,9 +138,15 @@ int timeSimFlag ;  assign timeSimFlag to "{sys}TIME:intSimulate" ;
 
 evflag changedBias ;         /* Event flag to detect changes in time offset */
 evflag changedTdb ;          /* Event flag for changes in deltdb */
+evflag changedConfig ;       /* Event flag for changes in time configuration */
 
 sync tcsDeltdb changedTdb ;
 sync tcsBias   changedBias ;
+sync tcsXpm    changedConfig ;
+sync tcsYpm    changedConfig ;
+sync tcsDjmls  changedConfig ;
+sync tcsDelat  changedConfig ;
+sync tcsDelut  changedConfig ;
 
 /* Local variables */
 
@@ -149,13 +163,13 @@ double BCmNTP ;               /* Bancomm - NTP (secs) */
 
 double tlong  ;          /* Site longitude (radians)*/
 double tlat   ;          /* site latitude (radians) */
-double xpmr   ;          /* X component of polar motion (arcsec) */
-double ypmr   ;          /* Y component of polar motion (arcsec) */
-double ttmtai ;          /* TT - TAI (secs) */
+double xpm    ;          /* X component of polar motion (arcsec) */
+double ypm    ;          /* Y component of polar motion (arcsec) */
+double ttmtai ;          /* TT - TAI (seconds) */
 double djmls  ;          /* MJD of next leap second */
-double delat  ;          /* TAI - UTC before next leap second */
+double delat  ;          /* TAI - UTC before next leap second (seconds) */
 double delut  ;          /* UT1 - UTC (seconds) */
-double deltdb ;          /* delta TDB */
+double deltdb ;          /* delta TDB (days) */
 double biass ;           /* time offset (days) */
 
 /* Code for state set timeMon */
@@ -175,8 +189,8 @@ ss timeMon
  */
     tlong = -155.471667 ;
     tlat  = 19.826667 ;
-    xpmr   = 0.25 ;     
-    ypmr   = 0.4 ;     
+    xpm    = 0.25 ;     
+    ypm    = 0.4 ;     
     ttmtai = 32.184 ; 
     djmls  = 50083.0 ;    
     delat  = 31.0 ;      
@@ -184,7 +198,7 @@ ss timeMon
     deltdb = 0.0 ;     
     biass = 0.0 ;     
     timeClockCheck() ;
-    timeSetDefaults (tlong, tlat, xpmr, ypmr, ttmtai, djmls, delat,
+    timeSetDefaults (tlong, tlat, xpm, ypm, ttmtai, djmls, delat,
                      delut, deltdb, biass) ;
     timeInit() ;
     timeGetSimFlag(&timeSimFlag) ;
@@ -226,13 +240,13 @@ ss timeMon
  */
    pvGet(tcsTlong) ;
    pvGet(tcsTlat) ;
-   pvGet(tcsXpmr) ;
-   pvGet(tcsYpmr) ;
+   pvGet(tcsXpm) ;
+   pvGet(tcsYpm) ;
    pvGet(tcsTtmtai);
    pvGet(tcsDjmls) ;
    pvGet(tcsDelat) ;
    pvGet(tcsDelut) ;
-   timeSetDefaults(tcsTlong, tcsTlat, tcsXpmr, tcsYpmr, tcsTtmtai,
+   timeSetDefaults(tcsTlong, tcsTlat, tcsXpm, tcsYpm, tcsTtmtai,
                    tcsDjmls, tcsDelat, tcsDelut, tcsDeltdb, tcsBias) ;
    timeInit() ;
    } state monitoring
@@ -302,6 +316,15 @@ ss timeMon
    when (efTestAndClear(changedTdb))
    {
     timeLibRefresh(tcsDeltdb) ;
+   } state monitoring
+
+   when (efTestAndClear(changedConfig))
+   {
+    pvGet(tcsTlong) ;
+    pvGet(tcsTlat) ;
+    pvGet(tcsTtmtai);
+    timeSetDefaults(tcsTlong, tcsTlat, tcsXpm, tcsYpm, tcsTtmtai,
+                    tcsDjmls, tcsDelat, tcsDelut, tcsDeltdb, tcsBias) ;
    } state monitoring
 
   }
