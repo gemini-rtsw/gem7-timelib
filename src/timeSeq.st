@@ -9,6 +9,9 @@
 /* *INDENT-OFF* */
 /*
  * $Log$
+ * Revision 1.4  1999/05/30 10:42:38  dlt
+ * Check tcs time variables even when simulating time
+ *
  * Revision 1.3  1999/01/17 01:27:24  cjm
  * Change delat from 31 to 32 for leap second at end of 1998
  *
@@ -263,6 +266,47 @@ ss timeMon
    when (pvConnectCount() == pvChannelCount())
    {
    } state checkState
+
+   when (delay(loopTime))
+   {
+/* This code periodically reads the time from the Bancomm, and sets the 
+ * time system health on the basis of the error returned
+ */
+    readstat = timeCheck(&BCmNTP) ;
+    if ((BCmNTP > 2.0 || BCmNTP < -2.0) && readstat)
+    {
+       if (strcmp(timeHealth,"BAD") || prevstat != readstat)
+       {
+           strcpy(timeHealth, "BAD") ;
+           prevstat = readstat ;
+           pvPut(timeHealth) ;
+           sprintf(tcsLog, "Time: Error, status = %d", readstat) ;
+           pvPut(tcsLog) ;
+       }
+    }
+    else if ((BCmNTP < 2.0 && BCmNTP > -2.0) && readstat)
+    {
+       if (strcmp(timeHealth,"WARNING") || prevstat != readstat)
+       {
+           strcpy(timeHealth, "WARNING") ;
+           prevstat = readstat ;
+           pvPut(timeHealth) ;
+           sprintf(tcsLog, "Time: Warning, status = %d", readstat) ;
+           pvPut(tcsLog) ;
+       }
+    }
+    else
+    {
+       if (strcmp(timeHealth,"WARNING") || prevstat != readstat)
+       {
+           strcpy(timeHealth, "WARNING") ;
+           prevstat = readstat ;
+           pvPut(timeHealth) ;
+           sprintf (tcsLog, "Time: No TCS connection") ;
+           pvPut(tcsLog) ;
+       }
+    }
+   } state waitConnect
   }
 
   state monitoring
