@@ -28,7 +28,10 @@
  *   Read the raw time (including any offset-for-testing)
  *
  *   Description:
- *   Read the current raw time from the Gemini Time Service.
+ *   If running on a vxWorks system, read the current raw time from the Gemini Time Service.
+ *   If running off line on a Unix system then read the Unix clock. In this case, the
+ *   highest resolution clock available is used (this may only give a resultion of 1 second)
+ *   In both cases the raw time returned is in SI seconds since 1970 January 1.0 TAI.
  *
  *   Invocation:
  *   status = timeNow (&rawt)
@@ -107,6 +110,8 @@ int timeNow ( double *rawt )
 **  ---------------
 */
 
+#define  _POSIX_C_SOURCE 199309L
+#include <unistd.h>
 #include <time.h>
 #include "timesys.h"
 int timeNow ( double *rawt )
@@ -137,7 +142,20 @@ int timeNow ( double *rawt )
 **  Copyright 1997 RAL.  All rights reserved.
 */
 {
+
+#ifdef _POSIX_TIMERS
+  
+   struct timespec tspec ;
+
+   (void) clock_gettime (CLOCK_REALTIME, &tspec ) ;
+   *rawt = (double)tspec.tv_sec + (double)tspec.tv_nsec/1000000000.0
+           + datlsd * 86400.0 + biass;
+
+#else
+
    *rawt = (double) time ( (time_t*) NULL ) + datlsd * 86400.0 + biass;
+
+#endif
    return 0;
 }
 
