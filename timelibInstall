@@ -3,9 +3,16 @@
 #  Install script for Gemini timelib library
 #
 
+host=`hostname`
+if [ "`egrep $host /etc/hosts | egrep '^10\.'`" -ne "" ]; then
+    site=MK;
+else
+    site=CP;
+fi
+
 slalib_dir=/gemini/epics3.13.4/slalib/slalib
 
-applSetup.pl -T mv167 -T ppc604 -I src -I startup -d $slalib_dir $1 > $2 2>&1
+applSetup.pl -T mv167 -T ppc604 -I src -I startup -d $slalib_dir -S $site $1 > $2 2>&1
 
 gmake >> $2 2>&1
 
