@@ -3,7 +3,7 @@
 #  Install script for Gemini timelib library
 #
 
-slalib_dir=/gemini/slalib/slalib
+slalib_dir=/gemini/epics3.13.4/slalib/slalib
 
 applSetup.pl -T mv167 -T ppc604 -I src -I startup -d $slalib_dir $1 > $2 2>&1
 
