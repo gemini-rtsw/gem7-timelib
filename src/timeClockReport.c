@@ -61,8 +61,7 @@ void timeClockReport( )
 
 /* Report if system is in simulation mode */
 
-  if (simulate)
-  {
+  if (simulate) {
    printf("Time system is in simulation mode\n") ;
    if (absent)
     printf("All times are being read from the Real Time Clock\n\n") ;
@@ -74,8 +73,7 @@ void timeClockReport( )
  * but there is no hardware to support this mode ?
  */
 
-  if (absent && !simulate)
-  {
+  if (absent && !simulate) {
    printf("Warning: system has been started in non-simulation mode\n") ;
    printf("         but there is no Bancomm hardware present \n") ;
   }
@@ -84,8 +82,7 @@ void timeClockReport( )
  * and whether it is synched to its time source 
  */
 
-  if (!absent)
-  {
+  if (!absent) {
    numGPSLeapSecs = bcGetGpsLeap( ) ;
    bcReadStat     = bc635_read(&tai) ;
    unsynched = bcReadStat & 0x01 ;
@@ -102,23 +99,18 @@ void timeClockReport( )
    if (freqOffsetErr)
      printf ("Warning: Frequency offset error\n") ;
 
-   if (master)                /* handle cases where master is requested */
-   {
+   if (master) {              /* handle cases where master is requested */
     if (numGPSLeapSecs > 0 )  /* a bc637 has been detected */
     {
-     if (unsynched)           /* Bancomm not locked to satellite */
-     {
+     if (unsynched) {           /* Bancomm not locked to satellite */
 /* No extra output needed */
-     }
-     else
-     {
+     } else {
 /* Everything is in order */
      }
-    }
-    else                        /* Number of leap secs is 0 */
-    {
-     if (unsynched)
-     {
+
+    } else {                    /* Number of leap secs is 0 */
+
+     if (unsynched) {
 /* This is an ambiguous case. Possible options are
  * a) there is a bc637 present but the GPS signal isn't available
  * b) Actually we are running with a bc635 but the IRIG-B signal isn't
@@ -178,6 +170,9 @@ void timeClockReport( )
      }
     }                          /* End no. of leap secs = 0 */
    }                           /* End handle cases for bc 635 */
+
+/* Finally output the raw time */
+  printf ("Raw time (TAI) %f\n", tai) ;
  
   }                            /* End if (!absent)  */
 }
