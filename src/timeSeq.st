@@ -9,6 +9,9 @@
 /* *INDENT-OFF* */
 /*
  * $Log$
+ * Revision 1.3  1999/01/17 01:27:24  cjm
+ * Change delat from 31 to 32 for leap second at end of 1998
+ *
  * Revision 1.2  1998/11/20 02:56:49  dlt
  * Monitor changes in polar motion etc.
  *
@@ -195,7 +198,7 @@ ss timeMon
     xpm    = 0.25 ;     
     ypm    = 0.4 ;     
     ttmtai = 32.184 ; 
-    djmls  = 50083.0 ;    
+    djmls  = 999999.9 ;    
     delat  = 32.0 ;      
     delut  = 0.746 ;    
     deltdb = 0.0 ;     
@@ -332,8 +335,9 @@ ss timeMon
 
   }
 
-/* This is currently a do nothing state to handle the case where the system
- * was started in simulation mode
+/* 
+ * This state monitors the tcs time variables but does not check the health
+ * of the Bancomm card.
  */
 
   state simulating
@@ -341,6 +345,26 @@ ss timeMon
    when (delay(30.0))
    {
    }  state simulating
+
+   when (efTestAndClear(changedBias))
+   {
+    timeOffset(tcsBias) ;
+   } state simulating
+
+   when (efTestAndClear(changedTdb))
+   {
+    timeLibRefresh(tcsDeltdb) ;
+   } state simulating
+
+   when (efTestAndClear(changedConfig))
+   {
+    pvGet(tcsTlong) ;
+    pvGet(tcsTlat) ;
+    pvGet(tcsTtmtai);
+    timeSetDefaults(tcsTlong, tcsTlat, tcsXpm, tcsYpm, tcsTtmtai,
+                    tcsDjmls, tcsDelat, tcsDelut, tcsDeltdb, tcsBias) ;
+   } state simulating
+
   }
  
 }
