@@ -14,20 +14,20 @@
  *   performing any unit conversions.
  *
  *   Invocation:
- *   timeSetDefaults(tlongm, tlatm, xpmr, ypmr, ttmtai, mjdls, delat, delut,
+ *   timeSetDefaults(tlongm, tlatm, xpm, ypm, ttmtai, mjdls, delat, delut,
  *                   deltdb, bias)
  *
  *   Parameters: (">" input, "!" modified, "<" output)  
  *      (>)   tlongm   (double)  Site mean longitude (degrees)
  *      (>)   tlatm    (double)  Site mena latitude (degrees)
- *      (>)   xpmr     (double)  X component of polar motion (arcsec)
- *      (>)   ypmr     (double)  Y component of polar motion (arcsec)
+ *      (>)   xpm      (double)  X component of polar motion (arcsec)
+ *      (>)   ypm      (double)  Y component of polar motion (arcsec)
  *      (>)   ttmtai   (double)  TT - TAI  (secs)
  *      (>)   mjdls    (double)  MJD following next leap second
  *      (>)   delat    (double)  TAI - UTC before that date (secs) 
  *      (>)   delut    (double)  UT1 - UTC before that date (secs)
- *      (>)   deltdb   (double)  current TDB - TT (secs)
- *      (>)   bias     (double)  offset for testing (secs)
+ *      (>)   deltdb   (double)  current TDB - TT (days)
+ *      (>)   bias     (double)  offset for testing (days)
  *
  *   External functions:
  *   slaPolmo   (slalib)  Compute components of polar motion
@@ -35,21 +35,21 @@
  *-
  */
 
-void timeSetDefaults (double tlongm, double tlatm, double xpmr, double ypmr,
+void timeSetDefaults (double tlongm, double tlatm, double xpm, double ypm,
                       double ttmtai, double mjdls, double delat, 
                       double delut, double deltdb, double bias)
 
 {
 
   double phit ;             /* latitude corrected for polar motion */
-  double daz ;              /* ?? */
+  double daz ;              /* Azimuth correction due to polar motion */
 
-  xpmr   = xpmr * DAS2R ;
-  ypmr   = ypmr * DAS2R ;
+  xpm   = xpm * DAS2R ;
+  ypm   = ypm * DAS2R ;
   tlongm = tlongm * DD2R ;
   tlatm  = tlatm * DD2R ;
 
-  slaPolmo ( tlongm, tlatm, xpmr, ypmr, &elongt, &phit, &daz ) ;
+  slaPolmo ( tlongm, tlatm, xpm, ypm, &elongt, &phit, &daz ) ;
 
   dttd = ttmtai / 86400. ;
   datlsd = delat / 86400. ;
@@ -60,8 +60,8 @@ void timeSetDefaults (double tlongm, double tlatm, double xpmr, double ypmr,
 
 #if defined(DEBUG)
   printf ("TIME DEFAULTS\n") ;
-  printf ("xpmr %-+25.15g\n", xpmr);
-  printf ("ypmr %-+25.15g\n", ypmr);
+  printf ("xpm %-+25.15g\n", xpm);
+  printf ("ypm %-+25.15g\n", ypm);
   printf ("tlongm %-+25.15g\n", tlongm);
   printf ("tlatm %-+25.15g\n", tlatm);
   printf ("elongt %-+25.15g\n", elongt);
