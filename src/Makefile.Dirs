@@ -1,0 +1,3 @@
+DIRS += timelib
+DIRS += timeProbe
+DIRS += $(APPLIC_SITE)
