@@ -97,6 +97,8 @@ int main( int argc, char *argv[] )
       printf("No\t\tNo\t\tNo\t       No\tunknown\t   unknown\tunknown\t\t%s\n", vmeSystems[i]);
   }
   printf("\n");
+  printf("NOTE! TO BELIEVE THESE RESULTS, EVERY SYSTEM MUST HAVE BEEN BOOTED TO THE EPICS LEVEL AT LEAST ONCE\n");
+  printf("SINCE THE LAST RESET OR POWER DOWN\n");
 
   for( i=0; i<numSys; i++ )
   {
