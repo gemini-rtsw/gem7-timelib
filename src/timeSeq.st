@@ -9,6 +9,9 @@
 /* *INDENT-OFF* */
 /*
  * $Log$
+ * Revision 1.5  2000/01/25 01:21:52  cjm
+ * Monitor time health during state waitConnect
+ *
  * Revision 1.4  1999/05/30 10:42:38  dlt
  * Check tcs time variables even when simulating time
  *
@@ -141,6 +144,7 @@ double tcsTlat ;  assign tcsTlat to "{top}ak:tlatm" ;
 double tcsTtmtai ; assign tcsTtmtai to "{top}ak:ttmtai" ;
 
 string timeHealth ;    assign timeHealth to "{sys}TIME:health" ;
+string timeMess ;  assign timeMess to "{sys}TIME:health.IMSS" ;
 string tcsLog ;    assign tcsLog to "{sys}logrecord" ;
 int timeSimFlag ;  assign timeSimFlag to "{sys}TIME:intSimulate" ;      
 
@@ -212,7 +216,9 @@ ss timeMon
     timeInit() ;
     timeGetSimFlag(&timeSimFlag) ;
     loopTime = 1.0 ;
-    strcpy(timeHealth, "BAD") ;
+    strcpy(timeMess, " ") ;
+    strcpy(timeHealth, "GOOD") ;
+    pvPut(timeMess) ;
     pvPut(timeHealth) ;
     pvPut(timeSimFlag) ;
     timemac = macValueGet("sys") ;
@@ -225,7 +231,9 @@ ss timeMon
   {
    when (timeSimFlag == TRUE)
    {
+     strcpy(timeMess, " ") ;
      strcpy(timeHealth, "GOOD") ;
+     pvPut(timeMess) ;
      pvPut(timeHealth) ;
    } state simulating
 
@@ -277,8 +285,10 @@ ss timeMon
     {
        if (strcmp(timeHealth,"BAD") || prevstat != readstat)
        {
+           strcpy(timeMess, "Bancomm time out by > 2s");
            strcpy(timeHealth, "BAD") ;
            prevstat = readstat ;
+           pvPut(timeMess);
            pvPut(timeHealth) ;
            sprintf(tcsLog, "Time: Error, status = %d", readstat) ;
            pvPut(tcsLog) ;
@@ -288,8 +298,10 @@ ss timeMon
     {
        if (strcmp(timeHealth,"WARNING") || prevstat != readstat)
        {
+           sprintf(timeMess, "Bancomm status %d", readstat) ;
            strcpy(timeHealth, "WARNING") ;
            prevstat = readstat ;
+           pvPut(timeMess);
            pvPut(timeHealth) ;
            sprintf(tcsLog, "Time: Warning, status = %d", readstat) ;
            pvPut(tcsLog) ;
@@ -299,8 +311,10 @@ ss timeMon
     {
        if (strcmp(timeHealth,"WARNING") || prevstat != readstat)
        {
+           strcpy(timeMess, "No TCS connection");
            strcpy(timeHealth, "WARNING") ;
            prevstat = readstat ;
+           pvPut(timeMess);
            pvPut(timeHealth) ;
            sprintf (tcsLog, "Time: No TCS connection") ;
            pvPut(tcsLog) ;
@@ -321,8 +335,10 @@ ss timeMon
     {
        if (strcmp(timeHealth,"BAD") || prevstat != readstat)
        {
+           strcpy(timeMess, "Bancomm time out by > 2s");
            strcpy(timeHealth, "BAD") ;
            prevstat = readstat ;
+           pvPut(timeMess) ;
            pvPut(timeHealth) ;
            sprintf(tcsLog, "Time: Health bad, status = %d", readstat) ;
            pvPut(tcsLog) ;
@@ -332,8 +348,10 @@ ss timeMon
     {
        if (strcmp(timeHealth,"WARNING") || prevstat != readstat)
        {
+           sprintf(timeMess, "Bancomm status %d", readstat) ;
            strcpy(timeHealth, "WARNING") ;
            prevstat = readstat ;
+           pvPut(timeMess) ;
            pvPut(timeHealth) ;
            sprintf(tcsLog, "Time: Health warning, status = %d", readstat) ;
            pvPut(tcsLog) ;
@@ -343,8 +361,10 @@ ss timeMon
     {
        if (strcmp(timeHealth,"GOOD") || prevstat != readstat)
        {
+           strcpy(timeMess," ");
            strcpy(timeHealth, "GOOD") ;
            prevstat = readstat ;
+           pvPut(timeMess) ;
            pvPut(timeHealth) ;
            sprintf (tcsLog, "Time: Health good") ;
            pvPut(tcsLog) ;
