@@ -9,6 +9,9 @@
 /* *INDENT-OFF* */
 /*
  * $Log$
+ * Revision 1.2  1998/11/20 02:56:49  dlt
+ * Monitor changes in polar motion etc.
+ *
  * Revision 1.1.1.1  1998/11/07 23:08:14  epics
  * Version 1-2 of timelib as transferred from DRAL
  *
@@ -193,7 +196,7 @@ ss timeMon
     ypm    = 0.4 ;     
     ttmtai = 32.184 ; 
     djmls  = 50083.0 ;    
-    delat  = 31.0 ;      
+    delat  = 32.0 ;      
     delut  = 0.746 ;    
     deltdb = 0.0 ;     
     biass = 0.0 ;     
