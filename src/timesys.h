@@ -24,10 +24,12 @@
 /* MJD for raw time epoch zero: 1970 January 1.0 (= Unix zero time). */
 #define TRAW_EPOCH 40587.0
 
+/* TS_1900_TO_UNIX_TIME is 70 * no. of secs in year + 17 * no. of secs in day
+*  (17 being the no. of leap years from 1900 to 1970) It is defined this
+*  way to prevent warnings over integer overflows
+*/
 #if defined (vxWorks)
-#define TS_SEC_IN_DAY (24*60*60)
-#define TS_SEC_IN_YEAR (TS_SEC_IN_DAY*365)
-#define TS_1900_TO_UNIX_EPOCH ((TS_SEC_IN_YEAR*70)+(17*TS_SEC_IN_DAY))
+#define TS_1900_TO_UNIX_EPOCH 2208988800UL 
 #endif
 
 /*
