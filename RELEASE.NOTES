@@ -1,2 +1,5 @@
 17 December 2003   V1-8
       Changes for the port to GEM8.5 (EPICS 3.13.9).
+
+03 January 2006    V1-8-1
+       Change default number of leap seconds to 33.0. 
