@@ -9,6 +9,9 @@
 /* *INDENT-OFF* */
 /*
  * $Log$
+ * Revision 1.1  2002/01/09 16:53:45  ajf
+ * Rearrangement of timelib source directories for inclusion of timeProbe.
+ *
  * Revision 1.6  2000/03/21 21:45:07  cjm
  * Write to IMSS field of the time health record
  *
@@ -205,12 +208,12 @@ ss timeMon
  */
     tlong = -155.471667 ;
     tlat  = 19.826667 ;
-    xpm    = 0.25 ;     
+    xpm    = 0.05 ;     
     ypm    = 0.4 ;     
     ttmtai = 32.184 ; 
     djmls  = 999999.9 ;    
-    delat  = 32.0 ;      
-    delut  = 0.746 ;    
+    delat  = 33.0 ;      
+    delut  = 0.338 ;    
     deltdb = 0.0 ;     
     biass = 0.0 ;     
     timeClockCheck() ;
