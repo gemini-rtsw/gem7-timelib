@@ -10,9 +10,23 @@ else
     site=CP;
 fi
 
-slalib_dir=/gemini/GEM8.5/slalib/slalib
+if [ "`echo $EPICS | egrep 'GEM8\.5|GEM8\.6'`" != "" ]; then
+    if [ "`echo $EPICS | egrep 'GEM8\.6'`" != "" ]; then
+	slalib_dir=/gemini/GEM8.6/slalib/slalib
+    else
+	slalib_dir=/gemini/GEM8.5/slalib/slalib
+    fi
+    ppc=ppc604_long;
+else
+    if [ "`echo $EPICS | egrep 'GEM8|GEM7'`" != "" ]; then
+	slalib_dir=/gemini/epics3.13.4/slalib/slalib
+    else
+	slalib_dir=/gemini/slalib/slalib
+    fi
+    ppc=ppc604;
+fi
 
-applSetup.pl -T mv167 -T ppc604_long -I src -I startup -d $slalib_dir -S $site $1 > $2 2>&1
+applSetup.pl -T mv167 -T $ppc -I src -I startup -d $slalib_dir -S $site $1 > $2 2>&1
 
 gmake >> $2 2>&1
 

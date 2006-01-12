@@ -3,3 +3,7 @@
 
 03 January 2006    V1-8-1
        Change default number of leap seconds to 33.0. 
+
+11 January 2006   V1-8-2
+      Modified timelibInstall to allow compiling for EPICS releases other
+      than GEM8.5
