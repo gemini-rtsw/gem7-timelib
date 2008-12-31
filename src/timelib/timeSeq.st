@@ -9,6 +9,9 @@
 /* *INDENT-OFF* */
 /*
  * $Log$
+ * Revision 1.2  2006/01/03 11:29:13  cjm
+ * Change default leap seconds to 33
+ *
  * Revision 1.1  2002/01/09 16:53:45  ajf
  * Rearrangement of timelib source directories for inclusion of timeProbe.
  *
@@ -212,7 +215,7 @@ ss timeMon
     ypm    = 0.4 ;     
     ttmtai = 32.184 ; 
     djmls  = 999999.9 ;    
-    delat  = 33.0 ;      
+    delat  = 34.0 ;      
     delut  = 0.338 ;    
     deltdb = 0.0 ;     
     biass = 0.0 ;     
