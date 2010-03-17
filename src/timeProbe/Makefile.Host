@@ -5,7 +5,11 @@ include ../.applTop
 include $(APPLIC_TOP)/config/CONFIG
 
 PROD           = timeProbe
+ifeq ($(T_A),Linux)
 timeProbe_SRCS = timeProbe.c xdrTimeProbe.c clnt_create_timed.c
+else
+timeProbe_SRCS = timeProbe.c xdrTimeProbe.c
+endif
 
 #	Add-on CFLAGS that are needed by this Makefile.
 #	(If possible, all system specific flags should be
