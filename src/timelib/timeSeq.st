@@ -9,6 +9,9 @@
 /* *INDENT-OFF* */
 /*
  * $Log$
+ * Revision 1.3  2008/12/31 16:16:30  gemvx
+ * Changed delat to 34 to account for a new leap second
+ *
  * Revision 1.2  2006/01/03 11:29:13  cjm
  * Change default leap seconds to 33
  *
@@ -215,7 +218,7 @@ ss timeMon
     ypm    = 0.4 ;     
     ttmtai = 32.184 ; 
     djmls  = 999999.9 ;    
-    delat  = 34.0 ;      
+    delat  = 35.0 ;      
     delut  = 0.338 ;    
     deltdb = 0.0 ;     
     biass = 0.0 ;     
