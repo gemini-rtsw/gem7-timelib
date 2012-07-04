@@ -3,6 +3,9 @@
 #  Install script for Gemini timelib library
 #
 
+echo "WARNING: timelibInstall doesn't work with GEM8.7."
+echo "WARNING: timelibInstall doesn't build svyx but it's the same as ppc603_long."
+
 host=`hostname`
 if [ "`egrep $host /etc/hosts | egrep '^10\.' | wc -l`" -gt 0 ]; then
     site=MK;
