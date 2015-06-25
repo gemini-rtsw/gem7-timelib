@@ -9,6 +9,9 @@
 /* *INDENT-OFF* */
 /*
  * $Log$
+ * Revision 1.4  2012/06/25 21:12:21  gemvx
+ * Changed delat to 35 to take care if the June 2012 leap second
+ *
  * Revision 1.3  2008/12/31 16:16:30  gemvx
  * Changed delat to 34 to account for a new leap second
  *
@@ -218,7 +221,7 @@ ss timeMon
     ypm    = 0.4 ;     
     ttmtai = 32.184 ; 
     djmls  = 999999.9 ;    
-    delat  = 35.0 ;      
+    delat  = 36.0 ;      
     delut  = 0.338 ;    
     deltdb = 0.0 ;     
     biass = 0.0 ;     
