@@ -9,6 +9,9 @@
 /* *INDENT-OFF* */
 /*
  * $Log$
+ * Revision 1.5  2015/06/25 22:00:13  mrippa
+ * Changed delat to 36 to take care if the July 1st, 2015 leap second.
+ *
  * Revision 1.4  2012/06/25 21:12:21  gemvx
  * Changed delat to 35 to take care if the June 2012 leap second
  *
@@ -221,7 +224,7 @@ ss timeMon
     ypm    = 0.4 ;     
     ttmtai = 32.184 ; 
     djmls  = 999999.9 ;    
-    delat  = 36.0 ;      
+    delat  = 37.0 ;      
     delut  = 0.338 ;    
     deltdb = 0.0 ;     
     biass = 0.0 ;     
