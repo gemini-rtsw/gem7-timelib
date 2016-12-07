@@ -3,7 +3,6 @@
 #  Install script for Gemini timelib library
 #
 
-echo "WARNING: timelibInstall doesn't work with GEM8.7."
 echo "WARNING: timelibInstall doesn't build svyx but it's the same as ppc603_long."
 
 host=`hostname`
@@ -13,9 +12,13 @@ else
     site=CP;
 fi
 
-if [ "`echo $EPICS | egrep 'GEM8\.5|GEM8\.6'`" != "" ]; then
-    if [ "`echo $EPICS | egrep 'GEM8\.6'`" != "" ]; then
-	slalib_dir=/gemini/GEM8.6/slalib/slalib
+if [ "`echo $EPICS | egrep 'GEM8\.5|GEM8\.6|GEM8\.7'`" != "" ]; then
+    if [ "`echo $EPICS | egrep 'GEM8\.6|GEM8\.7'`" != "" ]; then
+        if [ "`echo $EPICS | egrep 'GEM8\.6'`" != "" ]; then
+	    slalib_dir=/gemini/GEM8.6/slalib/slalib
+        else
+	    slalib_dir=/gemini/GEM8.7/slalib/slalib
+        fi
     else
 	slalib_dir=/gemini/GEM8.5/slalib/slalib
     fi
@@ -29,7 +32,11 @@ else
     ppc=ppc604;
 fi
 
-applSetup.pl -T mv167 -T $ppc -I src -I startup -d $slalib_dir -S $site $1 > $2 2>&1
+if [ "`echo $EPICS | egrep 'GEM8\.7'`" != "" ]; then
+    applSetup.pl -T mv2700 -T $ppc -T sv3 -I src -I startup -d $slalib_dir -S $site $1 > $2 2>&1
+else
+    applSetup.pl -T mv167 -T $ppc -I src -I startup -d $slalib_dir -S $site $1 > $2 2>&1
+fi
 
 gmake >> $2 2>&1
 
