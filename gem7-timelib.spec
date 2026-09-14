@@ -79,9 +79,22 @@ BuildRequires:  make, gcc, perl, tcsh
 # So a consumer can pin a version rather than spell out the package name.
 Provides:       gem7-timelib = %{version}
 
+# Runtime Requires name the package WITHOUT an exact release. The name
+# already encodes the library version -- that is the whole point of
+# gem7-<lib>-V<ver> -- and rpm allows only one release of a given name
+# installed at a time, so pinning the release means two consumers built
+# against different rebuilds of the SAME library version can never be
+# co-installed:
+#
+#   cannot install both gem7-slalib-V1-9-4-...git4a156f2 and ...git008125e
+#
+# which is precisely what the pipeline README means by "leave runtime
+# Requires loose ... pinning their runtime deps only creates conflicts when
+# many are co-installed". BuildRequires stays exact, where reproducibility
+# matters and nothing is co-installed.
 # The crate ld's slalib before timelib at boot, so the runtime pairing must
 # match what this was built against.
-Requires:       gem7-slalib-V1-9-4 = 1.9.4-1.git008125e%{?dist}
+Requires:       gem7-slalib-V1-9-4
 
 %description
 timelib %{version}, the version the GEM7 IOCs load at boot, installed at
